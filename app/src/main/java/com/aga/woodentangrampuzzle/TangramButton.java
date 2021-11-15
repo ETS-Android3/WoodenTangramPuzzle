@@ -1,5 +1,7 @@
 package com.aga.woodentangrampuzzle;
 
+import static com.aga.woodentangrampuzzle.utils.ObjectBuildHelper.logDebugOut;
+
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -11,7 +13,8 @@ import android.graphics.Rect;
  *
  */
 public class TangramButton {
-    private static final float BUTTON_PRESSED_SCALE_FACTOR = 0.9f;
+    public static final float BUTTON_PRESSED_SCALE_FACTOR = 0.9f;
+    private static final String TAG = "TangramButton";
 
     private Bitmap bitmap, lockBitmap, cupBitmap, previewBitmap;
     private Rect srcRect, dstRect, dstPressedRect, lockSrcRect, lockDstRect, cupSrcRect, cupDstRect, previewSrcRect, previewDstRect;
@@ -81,6 +84,7 @@ public class TangramButton {
             dstPressedRect.top = (int) (dstRect.centerY() - y);
             dstPressedRect.bottom = (int) (dstRect.centerY() + y);
 
+//            logDebugOut(TAG, "getDstRect", "return PressedRect.");
             return dstPressedRect;
         }
         else
@@ -232,7 +236,6 @@ public class TangramButton {
         return title;
     }
 
-    // TODO: Реализовать эффект нажатия на кнопки.
     public void setPressed(boolean pressed) {
         isPressed = pressed;
     }

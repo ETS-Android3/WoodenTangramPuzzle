@@ -222,7 +222,6 @@ public class TangramView extends View{
                 if (isAnimationEnds && isLoadingEnds){
                     universalTimer.stop();
                     playMode = Mode.MAIN_MENU;
-                    invalidate();
                 }
                 break;
             case MAIN_MENU:
@@ -249,6 +248,7 @@ public class TangramView extends View{
         drawTitle(scratchpadCanvas);
 
         canvas.drawBitmap(scratchpadBitmap, 0, 0, simplePaint);
+        invalidate();
     }
 
     //<editor-fold desc="onDraw Common Functions">
@@ -351,25 +351,27 @@ public class TangramView extends View{
         canvas.drawBitmap(buttonMMExit.getBitmap(), buttonMMExit.getSrcRect(), buttonMMExit.getDstRect(), simplePaint);
 
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons));
         textPaint.setColor(COLOR_TEXT_ON_BUTTONS);
         textPaint.setShadowLayer(3, SHADOW_LAYER_OFFSET, SHADOW_LAYER_OFFSET, 0xff000000);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setShader(null);
 
         auxString = getResources().getString(R.string.button_MM_start);
+        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonMMStart.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
         textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
         x = buttonMMStart.getDstRect().left + buttonMMStart.getDstRect().width()/2f;
         y = buttonMMStart.getDstRect().top + buttonMMStart.getDstRect().height()/2f - textBounds.exactCenterY();
         canvas.drawText(auxString, x, y, textPaint);
 
         auxString = getResources().getString(R.string.button_MM_credits);
+        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonMMCredits.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
         textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
         x = buttonMMCredits.getDstRect().left + buttonMMCredits.getDstRect().width()/2f;
         y = buttonMMCredits.getDstRect().top + buttonMMCredits.getDstRect().height()/2f - textBounds.exactCenterY();
         canvas.drawText(auxString, x, y, textPaint);
 
         auxString = getResources().getString(R.string.button_MM_exit);
+        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonMMExit.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
         textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
         x = buttonMMExit.getDstRect().left + buttonMMExit.getDstRect().width()/2f;
         y = buttonMMExit.getDstRect().top + buttonMMExit.getDstRect().height()/2f - textBounds.exactCenterY();
@@ -652,6 +654,12 @@ public class TangramView extends View{
     private boolean touchMainMenu(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                if (buttonMMStart.getDstRect().contains((int)event.getX(), (int)event.getY()))
+                    buttonMMStart.setPressed(true);
+                else if (buttonMMCredits.getDstRect().contains((int)event.getX(), (int)event.getY()))
+                    buttonMMCredits.setPressed(true);
+                else if (buttonMMExit.getDstRect().contains((int)event.getX(), (int)event.getY()))
+                    buttonMMExit.setPressed(true);
                 return true;
             case MotionEvent.ACTION_MOVE:
                 break;
@@ -659,13 +667,15 @@ public class TangramView extends View{
                 if (buttonMMStart.getDstRect().contains((int)event.getX(), (int)event.getY())) {
                     isStartScrollingLSS = false;
                     playMode = Mode.LEVELS_SET_SELECTION;
-                    invalidate();
                 }
                 else if (buttonMMExit.getDstRect().contains((int)event.getX(), (int)event.getY())) {
                     Activity activity = (Activity) getContext();
                     activity.finish();
                     System.exit(0);
                 }
+                buttonMMStart.setPressed(false);
+                buttonMMCredits.setPressed(false);
+                buttonMMExit.setPressed(false);
                 break;
         }
         return false;
