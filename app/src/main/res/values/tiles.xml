@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="tile0_x">
+        <item>150</item>
+        <item>151</item>
+        <item>249</item>
+        <item>250</item>
+        <item>250</item>
+        <item>249</item>
+        <item>151</item>
+        <item>150</item>
+    </integer-array>
+    <integer-array name="tile0_y">
+        <item>81</item>
+        <item>80</item>
+        <item>80</item>
+        <item>81</item>
+        <item>179</item>
+        <item>180</item>
+        <item>180</item>
+        <item>179</item>
+    </integer-array>
+    <integer-array name="tile1_x">
+        <item>40</item>
+        <item>139</item>
+        <item>139</item>
+    </integer-array>
+    <integer-array name="tile1_y">
+        <item>80</item>
+        <item>80</item>
+        <item>179</item>
+    </integer-array>
+    <integer-array name="tile2_x">
+        <item>30</item>
+        <item>31</item>
+        <item>128</item>
+        <item>128</item>
+        <item>31</item>
+        <item>30</item>
+    </integer-array>
+    <integer-array name="tile2_y">
+        <item>81</item>
+        <item>81</item>
+        <item>178</item>
+        <item>179</item>
+        <item>179</item>
+        <item>178</item>
+    </integer-array>
+    <integer-array name="tile3_x">
+        <item>40</item>
+        <item>180</item>
+        <item>181</item>
+        <item>181</item>
+    </integer-array>
+    <integer-array name="tile3_y">
+        <item>190</item>
+        <item>190</item>
+        <item>191</item>
+        <item>331</item>
+    </integer-array>
+    <integer-array name="tile4_x">
+        <item>30</item>
+        <item>171</item>
+        <item>31</item>
+        <item>30</item>
+    </integer-array>
+    <integer-array name="tile4_y">
+        <item>190</item>
+        <item>331</item>
+        <item>331</item>
+        <item>330</item>
+    </integer-array>
+    <integer-array name="tile5_x">
+        <item>30</item>
+        <item>31</item>
+        <item>171</item>
+        <item>172</item>
+        <item>172</item>
+        <item>171</item>
+        <item>31</item>
+        <item>30</item>
+    </integer-array>
+    <integer-array name="tile5_y">
+        <item>341</item>
+        <item>340</item>
+        <item>340</item>
+        <item>341</item>
+        <item>481</item>
+        <item>482</item>
+        <item>482</item>
+        <item>481</item>
+    </integer-array>
+    <integer-array name="tile6_x">
+        <item>923</item>
+        <item>923</item>
+        <item>824</item>
+        <item>824</item>
+    </integer-array>
+    <integer-array name="tile6_y">
+        <item>230</item>
+        <item>431</item>
+        <item>530</item>
+        <item>329</item>
+    </integer-array>
+</resources>
