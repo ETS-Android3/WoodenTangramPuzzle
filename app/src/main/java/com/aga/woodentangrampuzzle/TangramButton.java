@@ -52,17 +52,67 @@ public class TangramButton {
     }
 
     public void setDstRect(Rect rect) {
-        dstRect.top = rect.top;
-        dstRect.left = rect.left;
-        dstRect.bottom = rect.bottom;
-        dstRect.right = rect.right;
+        if (isPressed) {
+            dstPressedRect.top = rect.top;
+            dstPressedRect.left = rect.left;
+            dstPressedRect.bottom = rect.bottom;
+            dstPressedRect.right = rect.right;
+            unpressButton();
+        }
+        else {
+            dstRect.top = rect.top;
+            dstRect.left = rect.left;
+            dstRect.bottom = rect.bottom;
+            dstRect.right = rect.right;
+            setDstPressedRect();
+        }
+
     }
 
     public void setDstRect(int left, int top, int right, int bottom) {
-        dstRect.top = top;
-        dstRect.left = left;
-        dstRect.bottom = bottom;
-        dstRect.right = right;
+        if (isPressed) {
+            dstPressedRect.top = top;
+            dstPressedRect.left = left;
+            dstPressedRect.bottom = bottom;
+            dstPressedRect.right = right;
+            unpressButton();
+        }
+        else {
+            dstRect.top = top;
+            dstRect.left = left;
+            dstRect.bottom = bottom;
+            dstRect.right = right;
+            setDstPressedRect();
+        }
+
+    }
+
+    private void unpressButton() {
+        float x, y;
+
+        x = dstPressedRect.centerX() - dstPressedRect.left;
+        x /= BUTTON_PRESSED_SCALE_FACTOR;
+        dstRect.left = (int) (dstPressedRect.centerX() - x);
+        dstRect.right = (int) (dstPressedRect.centerX() + x);
+
+        y = dstPressedRect.centerY() - dstPressedRect.top;
+        y /= BUTTON_PRESSED_SCALE_FACTOR;
+        dstRect.top = (int) (dstPressedRect.centerY() - y);
+        dstRect.bottom = (int) (dstPressedRect.centerY() + y);
+    }
+
+    private void setDstPressedRect() {
+        float x, y;
+
+        x = dstRect.centerX() - dstRect.left;
+        x *= BUTTON_PRESSED_SCALE_FACTOR;
+        dstPressedRect.left = (int) (dstRect.centerX() - x);
+        dstPressedRect.right = (int) (dstRect.centerX() + x);
+
+        y = dstRect.centerY() - dstRect.top;
+        y *= BUTTON_PRESSED_SCALE_FACTOR;
+        dstPressedRect.top = (int) (dstRect.centerY() - y);
+        dstPressedRect.bottom = (int) (dstRect.centerY() + y);
     }
 
     /**
@@ -71,22 +121,8 @@ public class TangramButton {
      * @return Rectangle with destination coordinates.
      */
     public Rect getDstRect() {
-        if (isPressed) {
-            float x, y;
-
-            x = dstRect.centerX() - dstRect.left;
-            x *= BUTTON_PRESSED_SCALE_FACTOR;
-            dstPressedRect.left = (int) (dstRect.centerX() - x);
-            dstPressedRect.right = (int) (dstRect.centerX() + x);
-
-            y = dstRect.centerY() - dstRect.top;
-            y *= BUTTON_PRESSED_SCALE_FACTOR;
-            dstPressedRect.top = (int) (dstRect.centerY() - y);
-            dstPressedRect.bottom = (int) (dstRect.centerY() + y);
-
-//            logDebugOut(TAG, "getDstRect", "return PressedRect.");
+        if (isPressed)
             return dstPressedRect;
-        }
         else
             return dstRect;
     }
