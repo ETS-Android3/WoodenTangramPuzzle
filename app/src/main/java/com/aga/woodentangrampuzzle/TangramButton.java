@@ -21,6 +21,7 @@ public class TangramButton {
     private PointF timeDstPoint;
     private boolean isPressed;
     private String title, timeString;
+    private int textSize;
 
     public TangramButton(Bitmap bitmap) {
         this.bitmap = bitmap;
@@ -278,6 +279,14 @@ public class TangramButton {
 
     public boolean getPressed() {
         return isPressed;
+    }
+
+    public int getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
     }
     //</editor-fold>
 }

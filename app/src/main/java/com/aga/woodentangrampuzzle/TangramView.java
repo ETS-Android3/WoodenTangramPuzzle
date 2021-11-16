@@ -344,7 +344,7 @@ public class TangramView extends View{
 
     //<editor-fold desc="onDraw MAIN_MENU">
     private void drawMMButtons(Canvas canvas) {
-        float x, y;
+        float x, y, scaleFactor;
 
         canvas.drawBitmap(buttonMMStart.getBitmap(), buttonMMStart.getSrcRect(), buttonMMStart.getDstRect(), simplePaint);
         canvas.drawBitmap(buttonMMCredits.getBitmap(), buttonMMCredits.getSrcRect(), buttonMMCredits.getDstRect(), simplePaint);
@@ -356,32 +356,31 @@ public class TangramView extends View{
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setShader(null);
 
-        auxString = getResources().getString(R.string.button_MM_start);
-        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonMMStart.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
-        textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
+        scaleFactor = buttonMMStart.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1;
+        textPaint.setTextSize(buttonMMStart.getTextSize() * scaleFactor);
+        textPaint.getTextBounds(buttonMMStart.getTitle(), 0, buttonMMStart.getTitle().length(), textBounds);
         x = buttonMMStart.getDstRect().left + buttonMMStart.getDstRect().width()/2f;
         y = buttonMMStart.getDstRect().top + buttonMMStart.getDstRect().height()/2f - textBounds.exactCenterY();
-        canvas.drawText(auxString, x, y, textPaint);
+        canvas.drawText(buttonMMStart.getTitle(), x, y, textPaint);
 
-        auxString = getResources().getString(R.string.button_MM_credits);
-        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonMMCredits.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
-        textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
+        scaleFactor = buttonMMCredits.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1;
+        textPaint.setTextSize(buttonMMCredits.getTextSize() * scaleFactor);
+        textPaint.getTextBounds(buttonMMCredits.getTitle(), 0, buttonMMCredits.getTitle().length(), textBounds);
         x = buttonMMCredits.getDstRect().left + buttonMMCredits.getDstRect().width()/2f;
         y = buttonMMCredits.getDstRect().top + buttonMMCredits.getDstRect().height()/2f - textBounds.exactCenterY();
-        canvas.drawText(auxString, x, y, textPaint);
+        canvas.drawText(buttonMMCredits.getTitle(), x, y, textPaint);
 
-        auxString = getResources().getString(R.string.button_MM_exit);
-        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonMMExit.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
-        textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
+        scaleFactor = buttonMMExit.getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1;
+        textPaint.setTextSize(buttonMMExit.getTextSize() * scaleFactor);
+        textPaint.getTextBounds(buttonMMExit.getTitle(), 0, buttonMMExit.getTitle().length(), textBounds);
         x = buttonMMExit.getDstRect().left + buttonMMExit.getDstRect().width()/2f;
         y = buttonMMExit.getDstRect().top + buttonMMExit.getDstRect().height()/2f - textBounds.exactCenterY();
-        canvas.drawText(auxString, x, y, textPaint);
+        canvas.drawText(buttonMMExit.getTitle(), x, y, textPaint);
     }
     //</editor-fold>
 
     //<editor-fold desc="onDraw LEVELS_SET_SELECTION">
     private void drawLSSButtons(Canvas canvas) {
-        int id;
         float x, y;
 
         textPaint.setTextAlign(Paint.Align.CENTER);
@@ -395,15 +394,12 @@ public class TangramView extends View{
             canvas.drawBitmap(buttonLSS[i].getBitmap(), buttonLSS[i].getSrcRect(), buttonLSS[i].getDstRect(), simplePaint);
 
             // Draw title of selected levels' set
-            id = getResources().getIdentifier("levels_set_" + i, "string", this.getContext().getPackageName());
-            auxString = getResources().getString(id);
-            textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonLSS[i].getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
-            textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
+            textPaint.setTextSize(buttonLSS[i].getTextSize()*(buttonLSS[i].getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
+            textPaint.getTextBounds(buttonLSS[i].getTitle(), 0, buttonLSS[i].getTitle().length(), textBounds);
             x = buttonLSS[i].getDstRect().left + buttonLSS[i].getDstRect().width()/2f;
             y = buttonLSS[i].getDstRect().top + buttonLSS[i].getDstRect().height()/2f - textBounds.exactCenterY();
-            canvas.drawText(auxString, x, y, textPaint);
+            canvas.drawText(buttonLSS[i].getTitle(), x, y, textPaint);
 
-            // "i" must be above 2, 'cause realized only two levels' sets.
             if (i >= INSTANTIATED_LEVEL_SET_NUMBER) {
                 // Draw shadow
                 canvas.drawBitmap(shadowButtonInLSS, buttonLSS[i].getSrcRect(), buttonLSS[i].getDstRect(), simplePaint);
@@ -438,7 +434,7 @@ public class TangramView extends View{
                 // Draw timer
                 textPaint.setTypeface(digitalTF);
                 textPaint.setTextAlign(Paint.Align.CENTER);
-                textPaint.setTextSize(getResources().getInteger(R.integer.font_digital));
+                textPaint.setTextSize(buttonLS[j].getTextSize());
                 textPaint.setColor(Color.BLACK);
                 textPaint.setShadowLayer(0,0,0,0);
                 canvas.drawText(buttonLS[j].getTimeString(), buttonLS[j].getTimeDstPoint().x, buttonLS[j].getTimeDstPoint().y, textPaint);
@@ -994,6 +990,8 @@ public class TangramView extends View{
         loadBackgroundBitmap();
         loadBitmaps();
         loadButtons();
+        loadButtonsResourcesTitle();
+        loadButtonsResourcesTextSize();
         setGradientHeaderLS();
         setGradientHeaderLSS();
         setAngularHeaders();
@@ -1046,6 +1044,35 @@ public class TangramView extends View{
             }
 
         logDebugOut(TAG, "loadButtons", "End method.");
+    }
+
+    private void loadButtonsResourcesTitle() {
+        int id;
+
+        buttonMMStart.setTitle(getResources().getString(R.string.button_MM_start));
+        buttonMMCredits.setTitle(getResources().getString(R.string.button_MM_credits));
+        buttonMMExit.setTitle(getResources().getString(R.string.button_MM_exit));
+
+        for (int i = 0; i < LEVEL_SET_NUMBER; i++) {
+            id = getResources().getIdentifier("levels_set_" + i, "string", this.getContext().getPackageName());
+            buttonLSS[i].setTitle(getResources().getString(id));
+        }
+
+    }
+
+    private void loadButtonsResourcesTextSize() {
+        int textSize = getResources().getInteger(R.integer.font_mm_buttons);
+
+        buttonMMStart.setTextSize(textSize);
+        buttonMMCredits.setTextSize(textSize);
+        buttonMMExit.setTextSize(textSize);
+
+        for (TangramButton t: buttonLSS)
+            t.setTextSize(textSize);
+
+        textSize = getResources().getInteger(R.integer.font_digital);
+        for (TangramButton t: buttonLS)
+            t.setTextSize(textSize);
     }
 
     private void loadBitmaps() {
