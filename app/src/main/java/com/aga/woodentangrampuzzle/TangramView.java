@@ -385,7 +385,6 @@ public class TangramView extends View{
         float x, y;
 
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons));
         textPaint.setColor(COLOR_TEXT_ON_BUTTONS);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setShadowLayer(3, SHADOW_LAYER_OFFSET, SHADOW_LAYER_OFFSET, 0xff000000);
@@ -398,6 +397,7 @@ public class TangramView extends View{
             // Draw title of selected levels' set
             id = getResources().getIdentifier("levels_set_" + i, "string", this.getContext().getPackageName());
             auxString = getResources().getString(id);
+            textPaint.setTextSize(getResources().getInteger(R.integer.font_mm_buttons)*(buttonLSS[i].getPressed()?TangramButton.BUTTON_PRESSED_SCALE_FACTOR:1));
             textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
             x = buttonLSS[i].getDstRect().left + buttonLSS[i].getDstRect().width()/2f;
             y = buttonLSS[i].getDstRect().top + buttonLSS[i].getDstRect().height()/2f - textBounds.exactCenterY();
@@ -687,12 +687,20 @@ public class TangramView extends View{
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startLevelSetScroll(event);
+                for (TangramButton t: buttonLSS) {
+                    if (t.getDstRect().contains((int)event.getX(), (int)event.getY())) {
+                        t.setPressed(true);
+                        break;
+                    }
+                }
                 return true;
             case MotionEvent.ACTION_MOVE:
                 updateLevelSetScroll(event);
                 invalidate();
                 return true;
             case MotionEvent.ACTION_UP:
+                for (TangramButton t: buttonLSS)
+                    t.setPressed(false);
                 if (isStartScrollingLSS)
                     return finishLevelSetScroll();
                 if (event.getY() < LSS_OFFSET_FROM_TOP * screenRect.height())
