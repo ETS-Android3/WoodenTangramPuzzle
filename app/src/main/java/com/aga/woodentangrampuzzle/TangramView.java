@@ -100,12 +100,13 @@ public class TangramView extends View{
     private static final float INGAME_TIMER_OFFSET_FROM_TOP = 0.045f;
     private static final float INGAME_TIMER_OFFSET_FROM_LEFT = 0.11f;
     private static final float INGAME_LEVEL_PROGRESS_OFFSET_FROM_TOP = 0.04f;
-    private static final float INGAME_LEVEL_PROGRESS_OFFSET_FROM_RIGHT = 0.14f;
+    private static final float INGAME_LEVEL_PROGRESS_OFFSET_FROM_RIGHT = 0.153f;
 //    private static final float INGAME_LEVEL_SIZE = 0.9f;
     private static final float INGAME_BACK_BUTTON_SIZE = 0.065f;
-    //private static final float INGAME_CUP_OFFSET_FROM_TOP = 0.007f; <-- CENTERED TO LEVEL_PROGRESS
+    private static final float INGAME_CUP_OFFSET_FROM_TOP = 0.012f;
     private static final float INGAME_CUP_OFFSET_FROM_RIGHT = 0.01f;
-    private static final float INGAME_CUP_SIZE = 0.07f;
+    private static final float INGAME_CUP_HEIGHT = 0.055f;
+    private static final float INGAME_CUP_WIDTH = 0.11f;
     private static final float INGAME_CUP_BRONZE = 80.0f;
     private static final float INGAME_CUP_SILVER = 95.0f;
     private static final float INGAME_CUP_GOLD = 99.0f;
@@ -1361,10 +1362,10 @@ public class TangramView extends View{
 
         cupDstRect = new Rect();
         // Centered with levelProgress
-        cupDstRect.top = (int) (baseScreenDimension * INGAME_LEVEL_PROGRESS_OFFSET_FROM_TOP - baseScreenDimension * INGAME_CUP_SIZE / 2);
-        cupDstRect.bottom = cupDstRect.top + (int) (baseScreenDimension * INGAME_CUP_SIZE);
-        cupDstRect.right = (int) (screenRect.width() - baseScreenDimension * INGAME_CUP_OFFSET_FROM_RIGHT);
-        cupDstRect.left = cupDstRect.right - (int) (baseScreenDimension * INGAME_CUP_SIZE);
+        cupDstRect.top = (int) (baseScreenDimension * INGAME_CUP_OFFSET_FROM_TOP);
+        cupDstRect.bottom = cupDstRect.top + (int) (baseScreenDimension * INGAME_CUP_HEIGHT);
+        cupDstRect.right = (int) (screenRect.width() + baseScreenDimension * INGAME_CUP_OFFSET_FROM_RIGHT);
+        cupDstRect.left = cupDstRect.right - (int) (baseScreenDimension * INGAME_CUP_WIDTH);
     }
 
     private void setMainMenuCoordinates() {
