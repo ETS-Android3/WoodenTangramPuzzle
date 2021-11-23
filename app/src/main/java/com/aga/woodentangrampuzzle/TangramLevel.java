@@ -12,8 +12,8 @@ import android.graphics.RectF;
  */
 public class TangramLevel {
 
-    private float[] x;
-    private float[] y;
+    private final float[] x;
+    private final float[] y;
     private Path path;
     private Path pathHole;
     private Rect tileBounds;
@@ -48,8 +48,6 @@ public class TangramLevel {
         // Offset between pivot point and center.
         float offsetX = bounds.centerX() - pivotPoint.x;
         float offsetY = bounds.centerY() - pivotPoint.y;
-        //Log.d("debug", "offsetX: " + offsetX);
-        //Log.d("debug", "offsetY: " + offsetY);
         offset(offsetX, offsetY);
         calcBounds();
         setPivotPoint();

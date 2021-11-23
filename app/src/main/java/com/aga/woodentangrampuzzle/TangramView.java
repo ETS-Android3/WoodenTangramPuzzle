@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.FloatEvaluator;
 import android.animation.IntEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -505,11 +506,10 @@ public class TangramView extends View{
             tilePath = tile[i].getPath();
             tileShadowPath = tile[i].getShadowPath();
 
-            // TODO: (28.12.2015) Меня не покидает мечта сделать нормальную тень под выделенным пазлом. А пока пусть будет такая упрощенная вручную нарисованная тень и затемнение самого пазла.
             if (i == selectedTile) {
                 tile[i].boundPaint.setStyle(Paint.Style.STROKE);
                 tile[i].boundPaint.setARGB(0x33, 0x00, 0x00, 0x00);
-                tile[i].boundPaint.setStrokeWidth(TILE_SHADOW_SIZE/3);
+                tile[i].boundPaint.setStrokeWidth(TILE_SHADOW_SIZE/2.5f);
                 canvas.drawPath(tileShadowPath, tile[i].boundPaint);
 
                 tile[i].boundPaint.setStrokeWidth(TILE_SHADOW_SIZE/2);
@@ -612,7 +612,6 @@ public class TangramView extends View{
                 invalidate();
                 break;
             case LEVEL:
-                // TODO: Реализовать свой private int MsgBox(title, message, flags)
                 saveData(selectedLevelSet, selectedLevel);
                 isStartScrollingLS = false;
                 universalTimer.stop();
@@ -625,6 +624,7 @@ public class TangramView extends View{
         return false;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if ((getSystemUiVisibility() & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
@@ -834,7 +834,6 @@ public class TangramView extends View{
     private boolean touchLevel(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                // TODO: (30.01.2016) Добавить подсказку к силуэту кубка, чтоб игрок знал пороговые значения для получения соотв. кубка.
                 if (touchIngameButtons(event))
                     return true;
                 touchIntoTile = startTileDrag(event);
@@ -1092,10 +1091,6 @@ public class TangramView extends View{
         headerDrawable.setTileModeY(Shader.TileMode.REPEAT);
         headerDrawable.setBounds(0, 0, (int)screenRect.width(), (int)screenRect.height());
         headerDrawable.draw(c);
-
-        //ingameHintCups = BitmapFactory.decodeResource(res, R.drawable.hint_cups);
-        //c = null;
-        /*c = new Canvas(ingameHeader);*/
 
         logDebugOut(TAG, "loadBitmaps", "End method.");
     }
@@ -1708,9 +1703,6 @@ public class TangramView extends View{
         simplePaint.setAntiAlias(true);
         simplePaint.setDither(true);
         simplePaint.setFilterBitmap(true);
-
-        //LinearGradient shader = new LinearGradient(0, 100, 0, 100, 0xff808080, 0x00808080, Shader.TileMode.REPEAT);
-        //simplePaint.setShader(shader);
 
         levelPaint = new Paint();
         levelPaint.setAntiAlias(true);

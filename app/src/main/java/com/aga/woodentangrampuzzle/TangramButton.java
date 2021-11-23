@@ -1,9 +1,6 @@
 package com.aga.woodentangrampuzzle;
 
-import static com.aga.woodentangrampuzzle.utils.ObjectBuildHelper.logDebugOut;
-
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
@@ -14,11 +11,12 @@ import android.graphics.Rect;
  */
 public class TangramButton {
     public static final float BUTTON_PRESSED_SCALE_FACTOR = 0.9f;
-    private static final String TAG = "TangramButton";
 
-    private Bitmap bitmap, lockBitmap, cupBitmap, previewBitmap;
-    private Rect srcRect, dstRect, dstPressedRect, lockSrcRect, lockDstRect, cupSrcRect, cupDstRect, previewSrcRect, previewDstRect;
-    private PointF timeDstPoint;
+    private final Bitmap bitmap;
+    private Bitmap lockBitmap;
+    private Bitmap previewBitmap;
+    private final Rect srcRect, dstRect, dstPressedRect, lockSrcRect, lockDstRect, cupSrcRect, cupDstRect, previewSrcRect, previewDstRect;
+    private final PointF timeDstPoint;
     private boolean isPressed;
     private String title, timeString;
     private int textSize;
@@ -39,7 +37,6 @@ public class TangramButton {
         cupDstRect = new Rect(0, 0, 0, 0);
         previewSrcRect = new Rect(0, 0, 0, 0);
         previewDstRect = new Rect(0, 0, 0, 0);
-        cupDstRect = new Rect(0, 0, 0, 0);
         timeDstPoint = new PointF(0, 0);
         timeString = "";
 
@@ -211,7 +208,6 @@ public class TangramButton {
      * @param bitmap Bitmap contained example of cup.
      */
     public void setCupBitmap(Bitmap bitmap) {
-        cupBitmap = bitmap;
         cupSrcRect.left =
                 cupSrcRect.top = 0;
         cupSrcRect.bottom = bitmap.getHeight();

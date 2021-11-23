@@ -19,14 +19,18 @@ import android.graphics.Shader;
 public class TangramTile {
     public static final float ANGLE = 0.785398f;
 
-    private float[] startX, startY;
+    private final float[] startX;
+    private final float[] startY;
     private PointF pivotPoint, shadowOffset;
-    private RectF boundsRect, tileBounds;
+    private final RectF boundsRect;
+    private final RectF tileBounds;
     public Paint shaderPaint, boundPaint;
     private Shader tileShader;
-    private Matrix matrix;
-    private Path mainPath, shadowPath;
-    private Region tileRegion, clipRegion;
+    private final Matrix matrix;
+    private final Path mainPath;
+    private Path shadowPath;
+    private final Region tileRegion;
+    private final Region clipRegion;
     private float accumulatedAngle = 0;
     private boolean boundsDefined = false;
 
@@ -191,7 +195,6 @@ public class TangramTile {
         for (int i = 1; i < n; i++) {
             path.lineTo(x[i], y[i]);
         }
-        // TODO: Самое время добавить path.cubicTo();
         path.close();
 
         return path;
