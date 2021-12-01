@@ -18,4 +18,7 @@
     <string name="really_quit">"Do you really want to quit?"</string>
     <string name="msg_yes">Yes</string>
     <string name="msg_no">No</string>
+    <string name="credits_text">The tangram  is a dissection puzzle consisting of seven flat polygons,
+        called tans, which are put together to form shapes. The objective is to replicate a pattern
+        (given only an outline) generally found in a puzzle book using all seven pieces without overlap.</string>
 </resources>

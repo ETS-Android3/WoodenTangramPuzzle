@@ -66,6 +66,11 @@ public class TangramView extends View{
     private static final float MM_BUTTON_GAP = 0.05f;
     //</editor-fold>
 
+    //<editor-fold desc="Credits">
+    private static final float CREDITS_TITLE_OFFSET_FROM_TOP = 0.1f;
+    private static final float CREDITS_OFFSET_FROM_TOP = 0.2f;
+    //</editor-fold>
+
     //<editor-fold desc="Levels Set Selection Menu">
     private static final float LSS_TITLE_OFFSET_FROM_TOP = 0.1f;
     private static final float LSS_OFFSET_FROM_TOP = 0.2f;
@@ -152,7 +157,7 @@ public class TangramView extends View{
     //</editor-fold>
 
     //<editor-fold desc="Variables">
-    private enum Mode {LOADING_SCREEN, MAIN_MENU, LEVELS_SET_SELECTION, LEVEL_SELECTION, LEVEL}
+    private enum Mode {LOADING_SCREEN, MAIN_MENU, LEVELS_SET_SELECTION, LEVEL_SELECTION, LEVEL, CREDITS}
     private Mode playMode;
     private TangramLevel level;
     private TangramTile[] tile;
@@ -181,6 +186,7 @@ public class TangramView extends View{
     private Rect cupDstRect;
     private RectF screenRect;
     private RectF ingamePlayableRect;
+    private RectF textCreditsBounds;
     private PointF prevTouch;
     private String[] levelsNames;
     private String auxString;
@@ -246,6 +252,8 @@ public class TangramView extends View{
                 drawCup(scratchpadCanvas);
                 drawLevelButtons(scratchpadCanvas);
                 break;
+            case CREDITS:
+                drawCreditsText(scratchpadCanvas);
         }
         drawTitle(scratchpadCanvas);
 
@@ -263,6 +271,7 @@ public class TangramView extends View{
             case LEVELS_SET_SELECTION:
             case LEVEL_SELECTION:
             case LEVEL:
+            case CREDITS:
                 bitmapBack.draw(canvas);
                 break;
         }
@@ -340,6 +349,18 @@ public class TangramView extends View{
                 y = screenRect.height() * INGAME_TITLE_OFFSET_FROM_TOP - textBounds.exactCenterY();
                 canvas.drawText(auxString, x, y, textPaint);
                 break;
+            case CREDITS:
+                textPaint.setTextAlign(Paint.Align.CENTER);
+                textPaint.setTextSize(getResources().getInteger(R.integer.font_credits_title));
+                textPaint.setColor(COLOR_TEXT_ON_BUTTONS);
+                textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+                textPaint.setShadowLayer(2, SHADOW_LAYER_OFFSET, SHADOW_LAYER_OFFSET, 0xff000000);
+                textPaint.setShader(null);
+                auxString = getResources().getString(R.string.button_MM_credits);
+                textPaint.getTextBounds(auxString, 0, auxString.length(), textBounds);
+                x = screenRect.width()/2;
+                y = screenRect.height() * CREDITS_TITLE_OFFSET_FROM_TOP - textBounds.exactCenterY();
+                canvas.drawText(auxString, x, y, textPaint);
         }
     }
     //</editor-fold>
@@ -589,6 +610,63 @@ public class TangramView extends View{
         canvas.drawBitmap(buttonIngameBackToMenu.getBitmap(), buttonIngameBackToMenu.getSrcRect(), buttonIngameBackToMenu.getDstRect(), simplePaint);
     }
     //</editor-fold>
+
+    //<editor-fold desc="onDraw CREDITS">
+    private void drawCreditsText(Canvas canvas) {
+        float x, y, lineSpacing, prevHalfWidth, offset;
+        int charsNumber, first=0, last, i=0;
+        boolean lastRow = false;
+        String row;
+
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setTextSize(getResources().getInteger(R.integer.font_credits_text));
+        textPaint.setColor(COLOR_TEXT_INGAME_HEADER);
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        textPaint.setShadowLayer(0, SHADOW_LAYER_OFFSET, SHADOW_LAYER_OFFSET, 0xff000000);
+        textPaint.setShader(null);
+
+        auxString = getResources().getString(R.string.credits_text);
+
+        last = charsNumber = textPaint.breakText(auxString, true, screenRect.width() * 0.85f, null);
+        lineSpacing =  textBounds.height();
+        row = auxString.substring(0, charsNumber);
+        textPaint.getTextBounds(row, 0, row.length(), textBounds);
+        prevHalfWidth = textBounds.width()/2f;
+
+        do {
+            row = auxString.substring(first, last);
+            row = substringTillLastSpace(row);
+            textPaint.getTextBounds(row, 0, row.length(), textBounds);
+            offset = prevHalfWidth - textBounds.width()/2f;
+            x = screenRect.width()/2 - offset;
+            y = textCreditsBounds.top - textBounds.exactCenterY() + i * lineSpacing;
+            canvas.drawText(row, x, y, textPaint);
+            first += row.length()+1;
+            last = first + charsNumber;
+            if (last > auxString.length()) {
+                lastRow = true;
+                last = auxString.length();
+            }
+            i++;
+        } while (!lastRow);
+
+        row = auxString.substring(first, last);
+        textPaint.getTextBounds(row, 0, row.length(), textBounds);
+        offset = prevHalfWidth - textBounds.width()/2f;
+        x = screenRect.width()/2 - offset;
+        y = textCreditsBounds.top - textBounds.exactCenterY() + i * lineSpacing;
+        canvas.drawText(row, x, y, textPaint);
+        textCreditsBounds.bottom = y + textBounds.height();
+
+        canvas.drawBitmap(gradientHeaderLSS, 0, 0, simplePaint);
+    }
+
+    private String substringTillLastSpace(String text) {
+        int index = text.lastIndexOf(" ");
+        return text.substring(0, index);
+    }
+    //</editor-fold>
+
     //</editor-fold>
 
 
@@ -601,6 +679,7 @@ public class TangramView extends View{
         switch (playMode) {
             case MAIN_MENU:
                 return true;
+            case CREDITS:
             case LEVELS_SET_SELECTION:
                 playMode = Mode.MAIN_MENU;
                 invalidate();
@@ -643,6 +722,8 @@ public class TangramView extends View{
                 return touchLevelSelection(event);
             case LEVEL:
                 return touchLevel(event);
+            case CREDITS:
+                return touchCredits(event);
         }
         return false;
     }
@@ -664,6 +745,9 @@ public class TangramView extends View{
                 if (buttonMMStart.getDstRect().contains((int)event.getX(), (int)event.getY())) {
                     isStartScrollingLSS = false;
                     playMode = Mode.LEVELS_SET_SELECTION;
+                }
+                else if (buttonMMCredits.getDstRect().contains((int)event.getX(), (int)event.getY())) {
+                    playMode = Mode.CREDITS;
                 }
                 else if (buttonMMExit.getDstRect().contains((int)event.getX(), (int)event.getY())) {
                     Activity activity = (Activity) getContext();
@@ -937,6 +1021,38 @@ public class TangramView extends View{
     }
     //</editor-fold>
 
+    //<editor-fold desc="onTouchEvent Credits">
+    private boolean touchCredits(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startLevelSetScroll(event);
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                updateCreditsScroll(event);
+                invalidate();
+                return true;
+            case MotionEvent.ACTION_UP:
+                return true;
+        }
+        return false;
+    }
+
+    private void updateCreditsScroll(MotionEvent event) {
+        float dy = event.getY() - prevTouch.y;
+        prevTouch.y = event.getY();
+
+        // Limitation for scrolling
+        if (Math.abs(dy) < INSENSITIVE_BACKLASH_ON_SCROLL * screenRect.height())
+            return;
+        if ((textCreditsBounds.top + dy) > CREDITS_OFFSET_FROM_TOP * screenRect.height())
+            dy = CREDITS_OFFSET_FROM_TOP * screenRect.height() - textCreditsBounds.top;
+        if ((textCreditsBounds.bottom + dy) < (1 - LSS_BUTTON_GAP) * screenRect.height())
+            dy = (1 - LSS_BUTTON_GAP) * screenRect.height() - textCreditsBounds.bottom;
+
+        textCreditsBounds.top += dy;
+    }
+    //</editor-fold>
+
     /**
      * Define is the levels unlocked in the current row.
      * Current row unlocked when all levels in the previous row get at least bronze cup.
@@ -1067,6 +1183,7 @@ public class TangramView extends View{
         buttonMMCredits.setTextSize(textSize);
         buttonMMExit.setTextSize(textSize);
 
+        textSize = getResources().getInteger(R.integer.font_lss_buttons);
         for (TangramButton t: buttonLSS)
             t.setTextSize(textSize);
 
@@ -1672,11 +1789,14 @@ public class TangramView extends View{
         ingamePlayableRect.top = height * INGAME_HEADER_HEIGHT;
         ingamePlayableRect.right = width;
         ingamePlayableRect.bottom = height;
+
+        textCreditsBounds.top = screenRect.height() * CREDITS_OFFSET_FROM_TOP;
     }
 
     private void doTheVeryFirstInitializations() {
         prevTouch = new PointF();
         textBounds = new Rect();
+        textCreditsBounds = new RectF();
         levelsCups = new int[LEVELS_NUMBER];
 
 //        v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);

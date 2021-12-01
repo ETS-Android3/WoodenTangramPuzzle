@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="font_loading_title">52</integer>
-    <integer name="font_mm_title">60</integer>
-    <integer name="font_mm_buttons">90</integer>
+    <integer name="font_loading_title">60</integer>
+    <integer name="font_mm_title">72</integer>
+    <integer name="font_mm_buttons">60</integer>
     <integer name="font_lss_buttons">72</integer>
-    <integer name="font_choose_level_title">48</integer>
-    <integer name="font_level_title">24</integer>
+    <integer name="font_credits_title">72</integer>
+    <integer name="font_credits_text">36</integer>
+    <integer name="font_choose_level_title">72</integer>
+    <integer name="font_level_title">36</integer>
     <integer name="font_level_progress">22</integer>
     <integer name="font_digital">42</integer>
-    <integer name="level_scale_factor">85</integer>
-    <integer name="level_locked_font_start_size">20</integer>
-    <integer name="level_locked_font_end_size">36</integer>
+    <integer name="level_scale_factor">100</integer>
+    <integer name="level_locked_font_start_size">30</integer>
+    <integer name="level_locked_font_end_size">50</integer>
     <integer name="angular_header_scale_factor">55</integer>
     <integer name="tile_shadow_size">12</integer>
 </resources>
