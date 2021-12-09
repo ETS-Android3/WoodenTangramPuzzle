@@ -146,7 +146,7 @@ public class TangramView extends View{
     private static float TILE_SHADOW_SIZE;
     private static float TILES_SCALE_FACTOR;
     // TODO: 19.01.2016 Следующие наборы уровней будут добавлены в будущем.
-    private static final int INSTANTIATED_LEVEL_SET_NUMBER = 2;
+    private static final int INSTANTIATED_LEVEL_SET_NUMBER = 3;
     private static final String TAG = "TangramView";
     //</editor-fold>
     //</editor-fold>
