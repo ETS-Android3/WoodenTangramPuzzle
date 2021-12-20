@@ -10,7 +10,7 @@
     <integer name="font_level_title">48</integer>
     <integer name="font_level_progress">36</integer>
     <integer name="font_digital">56</integer>
-    <integer name="level_scale_factor">160</integer>
+    <integer name="level_scale_factor">140</integer>
     <integer name="level_locked_font_start_size">40</integer>
     <integer name="level_locked_font_end_size">60</integer>
     <integer name="angular_header_scale_factor">75</integer>
