@@ -409,6 +409,11 @@
         <item>642</item>
         <item>500</item>
         <item>358</item>
+        <item>0</item>
+        <item>500</item>
+        <item>571</item>
+        <item>642</item>
+        <item>571</item>
     </integer-array>
     <integer-array name="ls2_level_17_y">
         <item>50</item>
@@ -421,6 +426,11 @@
         <item>334</item>
         <item>334</item>
         <item>192</item>
+        <item>0</item>
+        <item>192</item>
+        <item>121</item>
+        <item>192</item>
+        <item>263</item>
     </integer-array>
     <integer-array name="ls2_level_18_x">
         <item>300</item>

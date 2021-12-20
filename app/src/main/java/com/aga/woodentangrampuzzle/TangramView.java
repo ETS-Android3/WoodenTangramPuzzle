@@ -145,8 +145,7 @@ public class TangramView extends View{
     private static final int LEVEL_PROGRESS_CALC_SPEED = 2;
     private static float TILE_SHADOW_SIZE;
     private static float TILES_SCALE_FACTOR;
-    // TODO: 19.01.2016 Следующие наборы уровней будут добавлены в будущем.
-    private static final int INSTANTIATED_LEVEL_SET_NUMBER = 3;
+    private static final int INSTANTIATED_LEVEL_SET_NUMBER = 4;
     private static final String TAG = "TangramView";
     //</editor-fold>
     //</editor-fold>
@@ -401,13 +400,6 @@ public class TangramView extends View{
             x = buttonLSS[i].getDstRect().left + buttonLSS[i].getDstRect().width()/2f;
             y = buttonLSS[i].getDstRect().top + buttonLSS[i].getDstRect().height()/2f - textBounds.exactCenterY();
             canvas.drawText(buttonLSS[i].getTitle(), x, y, textPaint);
-
-            if (i >= INSTANTIATED_LEVEL_SET_NUMBER) {
-                // Draw shadow
-                canvas.drawBitmap(shadowButtonInLSS, buttonLSS[i].getSrcRect(), buttonLSS[i].getDstRect(), simplePaint);
-                // Draw lock
-                canvas.drawBitmap(buttonLSS[i].getLockBitmap(), buttonLSS[i].getLockSrcRect(), buttonLSS[i].getLockDstRect(), simplePaint);
-            }
         }
 
         canvas.drawBitmap(gradientHeaderLSS, 0, 0, simplePaint);
