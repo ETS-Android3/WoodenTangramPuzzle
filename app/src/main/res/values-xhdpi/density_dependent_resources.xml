@@ -3,11 +3,11 @@
     <integer name="font_loading_title">72</integer>
     <integer name="font_mm_title">96</integer>
     <integer name="font_mm_buttons">72</integer>
-    <integer name="font_lss_buttons">96</integer>
+    <integer name="font_lss_buttons">84</integer>
     <integer name="font_credits_title">96</integer>
     <integer name="font_credits_text">48</integer>
     <integer name="font_choose_level_title">96</integer>
-    <integer name="font_level_title">48</integer>
+    <integer name="font_level_title">38</integer>
     <integer name="font_level_progress">36</integer>
     <integer name="font_digital">56</integer>
     <integer name="level_scale_factor">140</integer>

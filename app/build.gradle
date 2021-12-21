@@ -9,8 +9,8 @@ android {
         applicationId "com.aga.woodentangrampuzzle"
         minSdk 21
         targetSdk 30
-        versionCode 29
-        versionName '0.6.6'
+        versionCode 31
+        versionName '0.6.8'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         targetSdkVersion 31

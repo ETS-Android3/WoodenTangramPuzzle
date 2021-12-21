@@ -84,7 +84,7 @@ public class TangramView extends View{
     //<editor-fold desc="Levels Selection Menu">
     private static final float LS_TITLE_OFFSET_FROM_TOP = 0.1f;
     private static final float LS_OFFSET_FROM_TOP = 0.2f;
-    private static final float LS_OFFSET_TIMER_FROM_BUTTONS_BOTTOM = 0.047f;
+    private static final float LS_OFFSET_TIMER_FROM_BUTTONS_BOTTOM = 0.059f;
     private static final float LS_GRADIENT_HEADER_OFFSET_FROM_TOP = 0.14f;
     private static final float LS_GRADIENT_HEADER_HEIGHT = 0.06f;
     private static final float LS_BUTTON_WIDTH = 0.25f;
@@ -98,7 +98,7 @@ public class TangramView extends View{
     //</editor-fold>
 
     //<editor-fold desc="Ingame Constants">
-    private static final float INGAME_TITLE_OFFSET_FROM_TOP = 0.03f;
+    private static final float INGAME_TITLE_OFFSET_FROM_TOP = 0.0305f;
     private static final float INGAME_HEADER_HEIGHT = 0.06f;
     private static final float INGAME_ANGULAR_HEADER_HEIGHT = 0.09f;
     private static final float INGAME_HEADER_SHADOW_HEIGHT = 0.015f;
